@@ -1,2 +1,2 @@
 # space-system-node-api
-This project is built with node.js and postgres.
+This project is built with node.js and postgresql.
