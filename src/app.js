@@ -20,5 +20,4 @@ app.use(bodyParser.urlencoded({
 // routes
 app.use(`/${basePath}/universities`, universityRoutes);
 
-
 export default app;
