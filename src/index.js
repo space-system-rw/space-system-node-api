@@ -1,15 +1,7 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+import server from './app'
 
-const app =  express();
+const PORT  = process.env.PORT || 8080;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-
-const PORT  = 8080;
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} !!!`);
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT} !`);
 });
