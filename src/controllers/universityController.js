@@ -1,13 +1,16 @@
+import model from '../database/models';
+
+const { University } = model;
 
 export default class universityController {
     // get all universties
     static async getAllUniversities(req, res) {
         try {
+            const allUniversities = await University.findAll({});
+
             return res.status(200).json({
                 message: 'All universities found successfully!',
-                data: [
-                    'University of Rwanda', 'Canergie Mellon University', 'Africa Institute of Mathematical Sciences'
-                ]
+                allUniversities
             });
         } catch (error) {
             return res.status(500).json({
@@ -19,14 +22,13 @@ export default class universityController {
     // get one universty
     static async getOneUniversity(req, res) {
         try {
+            const { id } = req.params,
+                existingUniversity = await University.findOne({ where: { id } });
+
+            if (!existingUniversity) res.status(404).json({ message: 'University Id does not exist!' });
             return res.status(200).json({
                 message: 'University found successfully!',
-                data: {
-                    id: 1,
-                    name: 'University of Rwanda',
-                    location: 'Rwanda - Kigali',
-                    fees: 2000
-                }
+                existingUniversity 
             });
         } catch (error) {
             return res.status(500).json({
@@ -38,6 +40,8 @@ export default class universityController {
     // create a university
     static async addUniversity(req, res) {
         try {
+            const addedUniversity = await University.create(req.body);
+
             return res.status(201).json({
                 message: 'University created successfully!',
                 data: req.body
@@ -52,9 +56,18 @@ export default class universityController {
     // update a university
     static async updateUniversity(req, res) {
         try {
+            const { id } = req.params,
+                existingUniversity = await University.findOne({ where: { id } });
+            
+            if (!existingUniversity) res.status(404).json({ message: 'University Id does not exist!' });
+
+            await University.update(req.body, { where: { id } });
+
+            const updatedUniversity = await University.findOne({ where: { id } });
+            
             return res.status(200).json({
                 message: 'University updated successfully!',
-                data: req.body
+                updatedUniversity
             });
         } catch (error) {
             return res.status(500).json({
@@ -66,6 +79,14 @@ export default class universityController {
     // delete a university
     static async deleteUniversity(req, res) {
         try {
+            const { id } = req.params,
+                existingUniversity = await University.findOne({ where: { id } });;
+
+            if (!existingUniversity) res.status(404).json({ message: 'University Id does not exist!' });
+            await University.destroy({
+                where: { id }
+            });
+
             return res.status(200).json({
                 message: 'University deleted successfully!'
             });
