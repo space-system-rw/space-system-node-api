@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
-import universityRoutes from './routes/universitiesRouter';
+import reviewRoutes from './routes/reviewRoutes';
+import universityRoutes from './routes/universitiesRoutes';
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 // routes
+app.use(`/${basePath}/reviews`, reviewRoutes);
+// app.use(`/${basePath}/universities/:id/reviews`, reviewRoutes);
 app.use(`/${basePath}/universities`, universityRoutes);
 
 export default app;
