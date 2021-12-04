@@ -44,7 +44,7 @@ export default class universityController {
 
             return res.status(201).json({
                 message: 'University created successfully!',
-                data: req.body
+                addedUniversity
             });
         } catch (error) {
             return res.status(500).json({
