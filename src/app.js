@@ -25,4 +25,9 @@ app.use(`/${basePath}/reviews`, reviewRoutes);
 // app.use(`/${basePath}/universities/:id/reviews`, reviewRoutes);
 app.use(`/${basePath}/universities`, universityRoutes);
 
+// test route
+app.use(`/${basePath}/test`, (req, res) => {
+    res.json('Hello Space Systems!');
+});
+
 export default app;
